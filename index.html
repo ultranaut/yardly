@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title></title>
+  <script src="vendor/underscore/underscore-min.js"></script>
+  <script src="shunt.js"></script>
+</head>
+<body>
+  <script>
+    var input = '3 + 4*2 / 4-1',
+    //  tokens = [3, '+', 4, '*', 2, '/', '(', 1, '−', 5, ')', '^', 2, '^', 3],
+        tokens = [3, '+', 4, '*', 2, '/', 4, '-', 1],
+        output = parseInfix(tokens);
+    console.log('FINAL:', output);
+  </script>
+</body>
+</html>
