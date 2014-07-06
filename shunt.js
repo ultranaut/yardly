@@ -95,6 +95,45 @@
     return outputQueue;
   };
 
+  shunt.evaluate = function (queue) {
+    var
+      evalStack = new Stack(),
+      curr, operand1, operand2;
+    while (queue.length) {
+      curr = queue.shift();
+      if (!isNaN(parseFloat(curr)) && isFinite(curr)) {
+        evalStack.push(parseFloat(curr));
+      }
+      else {
+        operand2 = evalStack.pop();
+        operand1 = evalStack.pop();
+        switch(curr) {
+          case '+':
+            evalStack.push(operand1 + operand2);
+            break;
+          case '-':
+            evalStack.push(operand1 - operand2);
+            break;
+          case '*':
+            evalStack.push(operand1 * operand2);
+            break;
+          case '/':
+            evalStack.push(operand1 / operand2);
+            break;
+          case '^':
+            evalStack.push(Math.pow(operand1, operand2));
+            break;
+          default:
+            var nothing = true;
+        }
+      }
+      console.log(queue);
+      console.log(evalStack.examine());
+      console.log('----------');
+    }
+    return evalStack.pop();
+  };
+
   // create the global object
   this.shunt = shunt;
 }).call(this);

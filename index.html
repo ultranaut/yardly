@@ -1,7 +1,7 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <title></title>
   <style>
     body { font-family: Helvetica, sans-serif; }
@@ -12,10 +12,10 @@
 </head>
 <body>
   <script>
-    var tokens;
-    //tokens = [3, '+', 4, '*', 2, '/', '(', 1, '−', 5, ')', '^', 2, '^', 3];
-    tokens = shunt.tokenize('3 + 4 * 2 / ((1-5)^2)^3');
-    shunt.parse(tokens);
+    var tokens, output, result;
+    tokens = shunt.tokenize('3 + 4 * 2 / (1-5)^2^3');
+    output = shunt.parse(tokens);
+    result = shunt.evaluate(output);
   </script>
 
   <div>should produce: <pre>3 4 2 * 1 5 − 2 3 ^ ^ / +</pre></div>
