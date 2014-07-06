@@ -29,26 +29,28 @@
     }
   };
 
-  function hump(e, i, l) {
+  // keeping with the railroad terminology
+  function hump(e) {
     console.log('token:', e);
     if (_.isNumber(e)) {
-      //console.log(e + ' is a number, so push it onto the outputQueue');
       outputQueue.push(e);
     }
+    else if (e === '(') {
+      opStack.push(e);
+    }
+    else if (e === ')') {
+      while (_.last(opStack) !== '(') {
+        outputQueue.push(opStack.pop());
+      }
+      opStack.pop();
+    }
     else {
-      //console.log(e + ' is an operator, so deal with the stack');
-      if (!opStack.length) {
-        //console.log('opStack is empty so push', e, 'onto it');
-        opStack.push(e);
-      }
-      else {
+      while (_.last(opStack) &&
+              getPrecedence(e) <= getPrecedence(_.last(opStack))) {
         console.log(getPrecedence(e), getPrecedence(_.last(opStack)));
-
-        while (getPrecedence(e) <= getPrecedence(_.last(opStack))) {
-          outputQueue.push(opStack.pop());
-        }
-        opStack.push(e);
+        outputQueue.push(opStack.pop());
       }
+      opStack.push(e);
     }
     console.log('opStack', opStack);
     console.log('outputQueue', outputQueue);
