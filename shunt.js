@@ -49,7 +49,8 @@
   // keeping with the railroad terminology
   function hump(e) {
     console.log('token:', e);
-    if (_.isNumber(e)) {
+    // http://stackoverflow.com/questions/18082
+    if (!isNaN(parseFloat(e)) && isFinite(e)) {
       outputQueue.push(e);
     }
     else if (e === '(') {
@@ -75,6 +76,13 @@
     console.log('outputQueue', outputQueue);
     console.log('----------');
   }
+
+  shunt.tokenize = function (string) {
+    var
+      re = /(?:(\d+)|([^\s]))/g,
+      res = string.match(re);
+    return res;
+  };
 
   shunt.parse = function (tokens) {
     console.log('INFIX:', tokens.join(' '));

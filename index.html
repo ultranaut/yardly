@@ -3,18 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <title></title>
+  <style>
+    body { font-family: Helvetica, sans-serif; }
+  </style>
   <script src="vendor/underscore/underscore-min.js"></script>
   <script src="structures.js"></script>
   <script src="shunt.js"></script>
 </head>
 <body>
   <script>
-    // 3 + 4 * 2 / 4 - 1
-    var tokens = [3, '+', 4, '*', 2, '/', '(', 1, '−', 5, ')', '^', 2, '^', 3];
+    var tokens;
+    //tokens = [3, '+', 4, '*', 2, '/', '(', 1, '−', 5, ')', '^', 2, '^', 3];
+    tokens = shunt.tokenize('3 + 4 * 2 / ((1-5)^2)^3');
     shunt.parse(tokens);
   </script>
 
-
-should produce 3 4 2 * 1 5 − 2 3 ^ ^ / +
+  <div>should produce: <pre>3 4 2 * 1 5 − 2 3 ^ ^ / +</pre></div>
 </body>
 </html>
