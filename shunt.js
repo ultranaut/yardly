@@ -10,16 +10,32 @@
     outputQueue = [],
     opStack  = [],
     precedence = {
-      '^': 4,
-      '*': 3,
-      '/': 3,
-      '+': 2,
-      '-': 2
+      '^': { 'val': 4, 'assoc': 'right' },
+      '*': { 'val': 3, 'assoc': 'left' },
+      '/': { 'val': 3, 'assoc': 'left' },
+      '+': { 'val': 2, 'assoc': 'left' },
+      '-': { 'val': 2, 'assoc': 'left' }
     };
 
   // operator precedence object
   var getPrecedence = function (operator) {
-    return precedence[operator];
+    operator = precedence[operator];
+    if (operator) {
+      return operator.val;
+    }
+    else {
+      return null;
+    }
+  };
+
+  var getAssoc = function (operator) {
+    operator = precedence[operator];
+    if (operator) {
+      return operator.assoc;
+    }
+    else {
+      return null;
+    }
   };
 
   var dumpStack = function () {
@@ -39,14 +55,16 @@
       opStack.push(e);
     }
     else if (e === ')') {
-      while (_.last(opStack) !== '(') {
+      while (_.last(opStack) && _.last(opStack) !== '(') {
         outputQueue.push(opStack.pop());
       }
       opStack.pop();
     }
     else {
       while (_.last(opStack) &&
-              getPrecedence(e) <= getPrecedence(_.last(opStack))) {
+             _.last(opStack) !== '(' &&
+             getPrecedence(e) <= getPrecedence(_.last(opStack)) &&
+             getAssoc(_.last(opStack)) === 'left') {
         console.log(getPrecedence(e), getPrecedence(_.last(opStack)));
         outputQueue.push(opStack.pop());
       }
@@ -59,7 +77,6 @@
 
   shunt.parse = function (tokens) {
     console.log('INFIX:', tokens.join(' '));
-    console.log('----------');
     console.log(tokens);
     console.log('----------');
     _.each(tokens, hump);
