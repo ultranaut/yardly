@@ -1,63 +1,72 @@
 /* global _ */
 
-var output = [],
-    stack = [];
+(function () {
 
-function precedence(token) {
-  var values = {
-    '^': 4,
-    '*': 3,
-    '/': 3,
-    '+': 2,
-    '-': 2
+  // Creat the shunt object
+  var shunt = {};
+
+  // basic data structures
+  var
+    outputQueue = [],
+    opStack  = [],
+    precedence = {
+      '^': 4,
+      '*': 3,
+      '/': 3,
+      '+': 2,
+      '-': 2
+    };
+
+  // operator precedence object
+  var getPrecedence = function (operator) {
+    return precedence[operator];
   };
-  return values[token];
-}
 
-function shunt(e, i, l) {
-  console.log('token:', e);
-  if (_.isNumber(e)) {
-    //console.log(e + ' is a number, so push it onto the output');
-    output.push(e);
-  }
-  else {
-    //console.log(e + ' is an operator, so deal with the stack');
-    if (!stack.length) {
-      //console.log('stack is empty so push', e, 'onto it');
-      stack.push(e);
+  var dumpStack = function () {
+    console.log('time to unwind', opStack);
+    while (opStack.length) {
+      outputQueue.push(opStack.pop());
+    }
+  };
+
+  function hump(e, i, l) {
+    console.log('token:', e);
+    if (_.isNumber(e)) {
+      //console.log(e + ' is a number, so push it onto the outputQueue');
+      outputQueue.push(e);
     }
     else {
-      //console.log(e,'has precedence', precedence[e]);
-      //console.log(_.last(stack),'has precedence', precedence[_.last(stack)]);
-
-      while (precedence(e) <= precedence(_.last(stack))) {
-        output.push(stack.pop());
+      //console.log(e + ' is an operator, so deal with the stack');
+      if (!opStack.length) {
+        //console.log('opStack is empty so push', e, 'onto it');
+        opStack.push(e);
       }
-      stack.push(e);
+      else {
+        console.log(getPrecedence(e), getPrecedence(_.last(opStack)));
+
+        while (getPrecedence(e) <= getPrecedence(_.last(opStack))) {
+          outputQueue.push(opStack.pop());
+        }
+        opStack.push(e);
+      }
     }
+    console.log('opStack', opStack);
+    console.log('outputQueue', outputQueue);
+    console.log('----------');
   }
-  //console.log('currently:');
-  console.log('stack', stack);
-  console.log('output', output);
-  console.log('----------');
-}
 
-function parseInfix(tokens) {
-  console.log(tokens);
-  console.log('----------');
-  var precedence = {
-        '^': 4,
-        '*': 3,
-        '/': 3,
-        '+': 2,
-        '-': 2
-      },
-      e;
-  _.each(tokens, shunt, this);
+  shunt.parse = function (tokens) {
+    console.log('INFIX:', tokens.join(' '));
+    console.log('----------');
+    console.log(tokens);
+    console.log('----------');
+    _.each(tokens, hump);
 
-  // unwind whatever remains on the stack
-  while (stack.length) {
-    output.push(stack.pop());
-  }
-  return output;
-}
+    dumpStack();
+    console.log('RPN:', outputQueue.join(' '));
+    return outputQueue;
+  };
+
+  // create the global object
+  this.shunt = shunt;
+}).call(this);

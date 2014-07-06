@@ -8,11 +8,8 @@
 </head>
 <body>
   <script>
-    var input = '3 + 4*2 / 4-1',
-    //  tokens = [3, '+', 4, '*', 2, '/', '(', 1, '−', 5, ')', '^', 2, '^', 3],
-        tokens = [3, '+', 4, '*', 2, '/', 4, '-', 1],
-        output = parseInfix(tokens);
-    console.log('FINAL:', output);
+    var tokens = [3, '+', 4, '*', 2, '/', 4, '-', 1];
+    shunt.parse(tokens);
   </script>
 </body>
 </html>
