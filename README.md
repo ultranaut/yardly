@@ -11,4 +11,6 @@ Shunt
 
 So there's that.
 
+At this point, there's absolutely no error handling here, and only handles with integers.
+
 [1]: https://en.wikipedia.org/wiki/Shunting-yard_algorithm
