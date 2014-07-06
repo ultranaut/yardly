@@ -1,6 +1,7 @@
-/* global _ */
+/* global _, Stack */
 
 (function () {
+  'use strict';
 
   // Creat the shunt object
   var shunt = {};
@@ -8,7 +9,7 @@
   // basic data structures
   var
     outputQueue = [],
-    opStack  = [],
+    opStack  = new Stack(),
     precedence = {
       '^': { 'val': 4, 'assoc': 'right' },
       '*': { 'val': 3, 'assoc': 'left' },
@@ -39,8 +40,8 @@
   };
 
   var dumpStack = function () {
-    console.log('time to unwind', opStack);
-    while (opStack.length) {
+    console.log('time to unwind', opStack.examine());
+    while (opStack.length()) {
       outputQueue.push(opStack.pop());
     }
   };
@@ -55,22 +56,22 @@
       opStack.push(e);
     }
     else if (e === ')') {
-      while (_.last(opStack) && _.last(opStack) !== '(') {
+      while (opStack.length() && opStack.peek() !== '(') {
         outputQueue.push(opStack.pop());
       }
       opStack.pop();
     }
     else {
-      while (_.last(opStack) &&
-             _.last(opStack) !== '(' &&
-             getPrecedence(e) <= getPrecedence(_.last(opStack)) &&
-             getAssoc(_.last(opStack)) === 'left') {
-        console.log(getPrecedence(e), getPrecedence(_.last(opStack)));
+      while (opStack.length() &&
+             opStack.peek() !== '(' &&
+             getPrecedence(e) <= getPrecedence(opStack.peek()) &&
+             getAssoc(opStack.peek()) === 'left') {
+        console.log(getPrecedence(e), getPrecedence(opStack.peek()));
         outputQueue.push(opStack.pop());
       }
       opStack.push(e);
     }
-    console.log('opStack', opStack);
+    console.log('opStack', opStack.examine());
     console.log('outputQueue', outputQueue);
     console.log('----------');
   }
