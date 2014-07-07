@@ -1,36 +1,38 @@
 function Stack() {
   'use strict';
-  var
-    dataStore = [],
-    top       = 0;
+
+  var dataStore = [];
 
   function examine() {
-    return dataStore.slice(0, top);
+    return dataStore;
   }
 
   function push(el) {
-    dataStore[top++] = el;
+    dataStore.push(el);
   }
 
   function pop() {
-    return dataStore[--top];
+    return dataStore.pop();
   }
 
-  function length() {
-    return top;
+  function isEmpty() {
+    return !dataStore.length;
   }
 
   function peek() {
-    return dataStore[top-1];
+    return dataStore[dataStore.length - 1];
   }
 
   function clear() {
-    top = 0;
+    // http://stackoverflow.com/a/17306971/452233
+    while (dataStore.length > 0) {
+      dataStore.pop();
+    }
   }
 
   this.push    = push;
   this.pop     = pop;
-  this.length  = length;
+  this.isEmpty = isEmpty;
   this.peek    = peek;
   this.clear   = clear;
   this.examine = examine;

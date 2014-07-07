@@ -41,7 +41,7 @@
 
   var dumpStack = function () {
     console.log('time to unwind', opStack.examine());
-    while (opStack.length()) {
+    while (!opStack.isEmpty()) {
       outputQueue.push(opStack.pop());
     }
   };
@@ -57,13 +57,13 @@
       opStack.push(e);
     }
     else if (e === ')') {
-      while (opStack.length() && opStack.peek() !== '(') {
+      while (!opStack.isEmpty() && opStack.peek() !== '(') {
         outputQueue.push(opStack.pop());
       }
       opStack.pop();
     }
     else {
-      while (opStack.length() &&
+      while (!opStack.isEmpty() &&
              opStack.peek() !== '(' &&
              getPrecedence(e) <= getPrecedence(opStack.peek()) &&
              getAssoc(opStack.peek()) === 'left') {
