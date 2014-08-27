@@ -3,38 +3,31 @@ function Stack() {
 
   var dataStore = [];
 
-  function examine() {
-    return dataStore;
-  }
-
-  function push(el) {
+  this.push = function (el) {
     dataStore.push(el);
-  }
+  };
 
-  function pop() {
+  this.pop = function () {
     return dataStore.pop();
-  }
+  };
 
-  function isEmpty() {
+  this.isEmpty = function () {
     return !dataStore.length;
-  }
+  };
 
-  function peek() {
+  this.peek = function () {
     return dataStore[dataStore.length - 1];
-  }
+  };
 
-  function clear() {
+  this.clear = function () {
     // http://stackoverflow.com/a/17306971/452233
     while (dataStore.length > 0) {
       dataStore.pop();
     }
-  }
+  };
 
-  this.push    = push;
-  this.pop     = pop;
-  this.isEmpty = isEmpty;
-  this.peek    = peek;
-  this.clear   = clear;
-  this.examine = examine;
+  this.examine = function () {
+    return dataStore;
+  };
 }
 
