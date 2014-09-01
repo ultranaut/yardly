@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en" data-ng-app="YardApp">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Yardly</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.css">
+  <link rel="stylesheet" href="css/app.css"/>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.min.js"></script>
+</head>
+
+<body>
+  <nav class="menu">
+    <a href="#/">home</a>
+  </nav>
+
+  <div data-ng-view></div>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular-route.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+
+  <script src="app.js"></script>
+  <script src="controllers/yard.js"></script>
+  <script src="services/tokenizer.js"></script>
+  <script src="services/shuntyard.js"></script>
+  <script src="services/stack.js"></script>
+</body>
+</html>

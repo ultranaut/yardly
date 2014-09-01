@@ -1,0 +1,30 @@
+body {
+  margin: 2rem;
+  font-size: 2rem;
+}
+
+.tokens {
+  margin-top: 1.5rem;
+}
+
+.token {
+  font: 2rem/1.0 monospace;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 0.25rem 1rem;
+  margin: 0 0.25rem;
+}
+
+.go-button {
+  font: normal 2.0rem/1.2 sans-serif;
+  color: #ccc;
+  background: #428bca;
+  border-radius: 4px;
+  padding: 0.25rem 1rem;
+  margin: 0 0.5rem;
+  display: inline-block;
+}
+
+.outputQueue {
+  margin: 2rem 0;
+}
