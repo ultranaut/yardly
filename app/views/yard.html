@@ -4,20 +4,17 @@
          placeholder="Enter an expression"
          data-ng-model="expression"
          data-ng-change="parseExpression()">
-  <span class="input-group-btn">
-    <button class="btn btn-default" type="button">Go!</button>
-  </span>
 </div>
 
 <div class="tokens">
   <!-- allow for duplicate tokens: http://stackoverflow.com/questions/16296670 -->
   <span class="token" data-ng-repeat="token in tokens track by $index">{{ token }}</span>
-  <span class="go-button" data-ng-click="shunt.parse()">parse</span>
+  <span class="go-button" data-ng-click="shunt.parse()">convert</span>
 </div>
 
 
 <div class="outputQueue">
   <!-- allow for duplicate tokens: http://stackoverflow.com/questions/16296670 -->
   <span class="token" data-ng-repeat="token in outputQueue track by $index">{{ token }}</span>
-  <span class="go-button" data-ng-click="shunt.evaluate()">eval</span>
+  <span class="go-button" data-ng-click="shunt.evaluate()">evaluate</span>
 </div>

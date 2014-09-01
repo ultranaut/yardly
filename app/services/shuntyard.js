@@ -45,17 +45,20 @@ angular.module('YardApp')
       }
     };
 
-    // keeping with the railroad terminology
-    function hump(e) {
-      console.log('token:', e);
+    /**
+     * Receives a token and operates on the output queue
+     * and operator stack accordingly
+     */
+    function hump(token) {
+      console.log('token:', token);
       // http://stackoverflow.com/questions/18082
-      if (!isNaN(parseFloat(e)) && isFinite(e)) {
-        outputQueue.push(e);
+      if (!isNaN(parseFloat(token)) && isFinite(token)) {
+        outputQueue.push(token);
       }
-      else if (e === '(') {
-        operatorStack.push(e);
+      else if (token === '(') {
+        operatorStack.push(token);
       }
-      else if (e === ')') {
+      else if (token === ')') {
         while (!operatorStack.isEmpty() && operatorStack.peek() !== '(') {
           outputQueue.push(operatorStack.pop());
         }
@@ -64,12 +67,12 @@ angular.module('YardApp')
       else {
         while (!operatorStack.isEmpty() &&
               operatorStack.peek() !== '(' &&
-              getPrecedence(e) <= getPrecedence(operatorStack.peek()) &&
+              getPrecedence(token) <= getPrecedence(operatorStack.peek()) &&
               getAssoc(operatorStack.peek()) === 'left') {
-          console.log(getPrecedence(e), getPrecedence(operatorStack.peek()));
+          console.log(getPrecedence(token), getPrecedence(operatorStack.peek()));
           outputQueue.push(operatorStack.pop());
         }
-        operatorStack.push(e);
+        operatorStack.push(token);
       }
       console.log('operatorStack', operatorStack.examine());
       console.log('outputQueue', outputQueue);

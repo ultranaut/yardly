@@ -3,7 +3,7 @@
 angular.module('YardApp')
   .controller('YardCtrl', ['$scope', 'Tokenizer', 'ShuntYard', function($scope, Tokenizer, ShuntYard) {
 
-    $scope.expression = '3 + 4 * 2 / (1-5)^2^3';
+    $scope.expression = '';
     $scope.tokens = [];
     $scope.outputQueue = [];
 
@@ -21,4 +21,7 @@ angular.module('YardApp')
         console.log($scope.evaluated);
       }
     };
+
+    $scope.expression = '3 + 4 * 2 / (1-5)^2^3';
+    $scope.parseExpression();
   }]);
